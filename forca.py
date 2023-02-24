@@ -11,7 +11,7 @@ def clear():
 
 class Forca:
     def __init__(self):
-        self.worldList = ["BANANA", "CACHORRO", "BETERRABA", "COMPUTADOR", "FAXINA", "ELEVADOR", "MANDIOCA", "FARINHA", "GARRAFA", "TELEVISAO", "PLANETA", "DESENHO", "MARIONETE", "ELEFANTE", "AVESTRUZ", "IMPRESSORA"]
+        self.worldList = ["BANANA", "JABUTICABA", "ASTRONAUTA", "ASFALTO", "ZEBRA", "CACHOEIRA", "ALFACE", "LASANHA", "TABULEIRO", "CACHORRO", "BETERRABA", "COMPUTADOR", "FAXINA", "ELEVADOR", "MANDIOCA", "FARINHA", "GARRAFA", "TELEVISAO", "PLANETA", "DESENHO", "MARIONETE", "ELEFANTE", "AVESTRUZ", "IMPRESSORA"]
         self.word = self.worldList[randint(0, len(self.worldList)-1)]
         self.chances = 5
         self.tam = len(self.word)
@@ -89,6 +89,17 @@ class Forca:
     def exibeTentativas(self):
         print(f"Tentativas restantes: {self.chances}")
 
+    def checkLetraErrada(self, letra):
+        flag = False
+        for i in self.falhas:
+            if i == letra:
+                flag = True
+            
+        if not flag:
+            self.falhas.append(letra)
+            self.chances = self.chances - 1
+
+
     def tentativa(self):
         letra = input("=> Insira uma letra: ").upper()
         index = 0
@@ -103,9 +114,7 @@ class Forca:
             index = index+1
 
         if not temLetra:
-            print(f"A palavra não tem a letra {letra}") 
-            self.falhas.append(letra)
-            self.chances = self.chances - 1
+            self.checkLetraErrada(letra)
         
     def exibeFalhas(self):
         if len(self.falhas) > 0:
@@ -116,7 +125,7 @@ class Forca:
 
     def acabaJogo(self):
         if self.secreta == self.word:
-            print("Parabéns, você venceu!")
+            print(f"Parabéns, você venceu!\nA palavra é {self.word}!")
         elif self.chances == 0:
             print(f"Você perdeu... A palavra era {self.word}")
 
